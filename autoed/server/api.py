@@ -48,7 +48,7 @@ async def start_watcher(watcher_setup: WatcherSetup):
         use_inotify=watcher_setup.inotify,
         sleep_time=watcher_setup.sleep_time,
         log_dir=watcher_setup.log_dir,
-        no_slurm=not watcher_setup.slurm,
+        local=not watcher_setup.slurm,
     )
 
 
