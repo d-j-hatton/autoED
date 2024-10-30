@@ -72,14 +72,9 @@ async def start_watcher(watcher_setup: WatcherSetup):
 @router.delete("/watchers/{pid}")
 async def stop_watcher(pid: str):
     if pid in autoed_daemon.pids.values():
-<<<<<<< HEAD
         kill_process_and_children(int(pid))
         for d, _pid in autoed_daemon.pids.items():
             if _pid == pid:
                 del autoed_daemon.pids[d]
                 autoed_daemon.directories.remove(d)
                 break
-=======
-        kill_process_and_children(pid)
-        del autoed_daemon.pids[autoed_daemon.directories[pid]]
->>>>>>> 97ae372 (Remove record of killed process)
