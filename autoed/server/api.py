@@ -91,5 +91,8 @@ class ProcessSetup(BaseModel):
 
 @router.post("/process")
 async def process(process_setup: ProcessSetup):
-    processing_thread = Thread(name=f"proccesor-{process_setup.path}", target=process_dir, kwargs={"dir_name": process_setup.path, "force": process_setup.force})
-    processing_thread.start()
+    command = f"autoed_process {process_setup.path}"
+    if process_setup.force:
+        command += " -f"
+    process = subprocess.Popen(command, shell=True, env={**os.environ, "AUTOED_CONFIG_FILE": process_setup.config_file} if process_setup.config_file else None)
+    return process.pid
