@@ -57,7 +57,8 @@ class WatcherSetup(BaseModel):
     inotify: bool = False
     sleep_time: float = 30
     log_dir: str = ""
-    slurm: bool = True
+    slurm: bool = False
+    config_file: str = ""
 
 
 @router.post("/watcher")
@@ -68,6 +69,7 @@ async def start_watcher(watcher_setup: WatcherSetup):
         sleep_time=watcher_setup.sleep_time,
         log_dir=watcher_setup.log_dir,
         local=not watcher_setup.slurm,
+        config_file=watcher_setup.config_file or None,
     )
 
 
@@ -85,6 +87,7 @@ class ProcessSetup(BaseModel):
     path: str
     slurm: bool = True
     force: bool = True
+    config_file: str = ""
 
 @router.post("/process")
 async def process(process_setup: ProcessSetup):
